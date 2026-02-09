@@ -1,19 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// ID видео из ваших ссылок
-const videos = [
-  {
-    id: "obNZOSd8bBM",
-    title: "Live Performance 1",
-    desc: "Атмосферное погружение. Синтез живых инструментов и электроники."
-  },
-  {
-    id: "mJequ6c908w",
-    title: "Live Performance 2",
-    desc: "Ритмическая структура и мелодическая импровизация в реальном времени."
-  }
-];
+// Получаем видео из коллекции и сортируем по полю order
+const allVideos = await getCollection('sangam');
+const videos = allVideos.sort((a, b) => a.data.order - b.data.order).map(v => v.data);
 ---
 
 <Layout 

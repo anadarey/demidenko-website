@@ -1,46 +1,43 @@
+---
+interface Service {
+    title: string;
+    desc: string;
+}
+
+interface Props {
+    heading: string;
+    sub: string;
+    list: Service[];
+}
+
+const { heading, sub, list } = Astro.props;
+---
+
 <section id="services" class="py-24 bg-slate-900">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
             
             <div class="md:col-span-1">
-                <h2 class="text-4xl text-amber-500 mb-6 leading-tight">Направления<br/><span class="text-white italic">деательности</span></h2>
+                <h2 class="text-4xl text-amber-500 mb-6 leading-tight font-serif">{heading}</h2>
                 <p class="text-slate-400 font-light text-sm leading-relaxed">
-                    Помимо концертной активноати, я посвящаю время передаче знаний и студийной работе, помогая другим артистам найти свое звучание.
+                    {sub}
                 </p>
             </div>
 
             <div class="md:col-span-2 space-y-12">
-                
-                <div class="flex gap-6 group">
-                    <div class="text-amber-500/30 text-4xl font-serif group-hover:text-amber-500 transition-colors">*</div>
-                    <div>
-                        <h3 class="text-2xl text-white mb-3">Обучение и Дхрупад</h3>
-                        <p class="text-slate-400 font-light leading-relaxed">
-                            Преподавание практической игры на инструментах (бансури, фортепиано, табла, пакхавадж). Особое внимание уделяется <strong>пению в стиле Дхрупад</strong> — древнейшей форме северной индийской классической музыки, нюансам в украшениях и микротонике.
-                        </p>
+                {list.map((service, index) => (
+                    <div class="flex gap-6 group">
+                        <div class="text-amber-500/30 text-4xl font-serif group-hover:text-amber-500 transition-colors">
+                            {String(index + 1).padStart(2, '0')}
+                        </div>
+                        <div>
+                            <h3 class="text-2xl text-white mb-3 font-serif">{service.title}</h3>
+                            <p class="text-slate-400 font-light leading-relaxed">
+                                {service.desc}
+                            </p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="flex gap-6 group">
-                    <div class="text-amber-500/30 text-4xl font-serif group-hover:text-amber-500 transition-colors">*</div>
-                    <div>
-                        <h3 class="text-2xl text-white mb-3">Композиция и Аранжировка</h3>
-                        <p class="text-slate-400 font-light leading-relaxed">
-                            Создание авторских партитур и аранжировок. Синтез оркестрового мышления с этническими текстурами для кино, театра и перформансов.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="flex gap-6 group">
-                    <div class="text-amber-500/30 text-4xl font-serif group-hover:text-amber-500 transition-colors">*</div>
-                    <div>
-                        <h3 class="text-2xl text-white mb-3">Музыкальное продюсирование</h3>
-                        <p class="text-slate-400 font-light leading-relaxed">
-                            Полный цикл студийной работы. Помощь в кристаллизации идеи, запись, сведение и поиск уникального звукового характера ваших произведений.
-                        </p>
-                    </div>
-                </div>
-
+                ))}
             </div>
         </div>
     </div>

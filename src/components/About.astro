@@ -1,42 +1,36 @@
-<section id="about" class="py-24 md:py-32 bg-slate-900 relative">
+---
+interface Props {
+    title: string;
+    text: string; // Markdown текст
+    image: string;
+}
+
+const { title, text, image } = Astro.props;
+
+// Для рендеринга Markdown текста используем встроенный парсер или просто выводим текст,
+// если там нет сложной разметки. Для простоты здесь выводим текст с сохранением переносов строк.
+---
+
+<section id="about" class="py-24 bg-slate-900">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            
-            <div class="order-2 md:order-1 space-y-8">
-                <h2 class="text-4xl md:text-5xl text-white mb-6">За пределами жанров</h2>
-                <div class="w-16 h-[1px] bg-amber-500 mb-8"></div>
-                
-                <div class="text-slate-300 leading-loose font-light text-lg space-y-6">
-                    <p>
-                        Мой путь в музыке — это постоянное расширение границ. Начав с академической строгости западной музыки, я обнаружил безграничный океан индийской классической традиции.
-                    </p>
-                    <p>
-                        Я не просто совмещаю стили. Я ищу точки соприкосновения, где математическая точность европейской гармонии встречается с медитативной импровизацией и глубиной Востока.
-                    </p>
-                    <p class="text-white font-normal border-l-2 border-amber-500 pl-4 italic">
-                        "Моя цель — создавать музыку, которая резонирует с внутренним состоянием слушателя, минуя культурные и языковые барьеры."
-                    </p>
-                </div>
-
-                <div class="pt-4">
-                    <span class="text-xs uppercase tracking-widest text-slate-500 block mb-4">Музыкальные возможности</span>
-                    <p class="text-amber-500 font-serif text-xl italic">
-                        Фортепиано, Вокал Дхрупад, Бансури, Табла, Пакхавадж,  Перкуссия, Синтезаторы
-                    </p>
+            <div class="order-2 md:order-1">
+                <h2 class="text-4xl text-amber-500 mb-6 font-serif">{title}</h2>
+                <div class="space-y-6 text-slate-300 leading-relaxed font-light text-lg whitespace-pre-line">
+                    {text}
                 </div>
             </div>
-
+            
             <div class="order-1 md:order-2 relative group">
                 <div class="absolute -inset-2 bg-gradient-to-r from-amber-500 to-purple-600 rounded-lg opacity-20 blur-lg group-hover:opacity-40 transition duration-1000"></div>
                 <div class="relative aspect-[3/4] bg-slate-800 overflow-hidden border border-white/10">
                     <img 
-                        src="/images/portrait.jpg" 
-                        alt="Andrei Demidenko Portrait" 
+                        src={image} 
+                        alt="Portrait" 
                         class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000 ease-in-out"
                     />
                 </div>
             </div>
-
         </div>
     </div>
 </section>

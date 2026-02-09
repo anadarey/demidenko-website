@@ -1,20 +1,63 @@
-
 ---
+// 1. Импорты компонентов
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Projects from '../components/Projects.astro';
-import Services from '../components/Services.astro';
+import Services from '../components/Services.astro'; // Имя файла Services.astro
 import Footer from '../components/Footer.astro';
+
+// 2. Импорт стилей (лучше делать это здесь)
 import "../styles/global.css";
+
+// 3. Получение данных (всё внутри одного блока ---)
+import { getEntry } from 'astro:content';
+
+// Получаем данные из файла home.md
+const homePage = await getEntry('pages', 'home');
+
+// Если файла нет или ошибка в данных, сайт упадет, поэтому проверим:
+if (!homePage) {
+  throw new Error("Не удалось найти файл src/content/pages/home.md");
+}
+
+const data = homePage.data;
 ---
 
-<Layout title="Андрей Демиденко | Музыкант и композитор">
-  <main>
-    <Hero />
-    <About />
-    <Projects />
-    <Services />
-  </main>
-  <Footer />
+<Layout title="АНДРЕЙ ДЕМИДЕНКО | Мультиинструменталист и композитор">
+	<main>
+        
+        <Hero 
+            subtitle={data.hero_subtitle}
+            leftTitle={data.hero_title_left}
+            rightTitle={data.hero_title_right}
+            desc={data.hero_desc}
+        />
+
+        <About 
+            title={data.about_title}
+            text={data.about_text}
+            image={data.about_image}
+            /* Если в home.md нет цитаты (about_quote), компонент может ругаться, 
+               если она обязательна. Если необязательна — поле просто проигнорируется. */
+        />
+
+        <Projects 
+            heading={data.projects_heading}
+            sub={data.projects_sub}
+            projects={data.projects_list}
+            
+            archiveHeading={data.archive_heading} 
+            archiveList={data.archive_list}
+        />
+
+        <Services 
+            heading={data.services_heading}
+            sub={data.services_sub}
+            list={data.services_list}
+        />
+        
+	</main>
+
+	<Footer />
 </Layout>

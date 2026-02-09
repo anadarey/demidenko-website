@@ -1,60 +1,90 @@
 ---
-const currentProjects = [
-  {
-    title: "Ananda Lila",
-    type: "Fusion Project",
-    desc: "Музыкальный проект, исследующий сакральные традиции через призму современного звучания.",
-    link: "https://www.ananda-lila.com", // Замените на реальную ссылку
-    active: true
-  },
-  {
-    title: "Sangam.live",
-    type: "Solo Experimental",
-    desc: "Точка слияния рек. Сольные эксперименты, лайв-лупинг и спонтанная композиция в реальном времени.",
-    link: "/sangam.live",
-    active: true
-  }
-];
+// Типы данных
+interface Project {
+    title: string;
+    type: string;
+    desc: string;
+    link: string;
+    is_live: boolean;
+}
 
-const pastProjects = ["Auroria", "Zaindiveli", "Da saz", "Cadenza Duo"];
+interface ArchiveProject {
+    name: string;
+    link?: string | null;
+}
+
+interface Props {
+    heading: string;
+    sub: string;
+    projects: Project[];
+    // Новые пропсы для архива
+    archiveHeading?: string;
+    archiveList?: ArchiveProject[];
+}
+
+const { 
+    heading, 
+    sub, 
+    projects, 
+    archiveHeading = "Архив", // Значение по умолчанию
+    archiveList = []          // Пустой массив по умолчанию
+} = Astro.props;
 ---
 
 <section id="projects" class="py-24 bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center mb-20">
-            <h2 class="text-4xl md:text-5xl text-white mb-4">Избранные Проекты</h2>
-            <p class="text-slate-400 font-light">Текущие исследования звука и формы</p>
+            <h2 class="text-4xl md:text-5xl text-white mb-4 font-serif">{heading}</h2>
+            <p class="text-slate-400 font-light">{sub}</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
-            {currentProjects.map(project => (
+            {projects.map(project => (
                 <a href={project.link} target="_blank" class="group relative block bg-slate-900 border border-white/5 hover:border-amber-500/50 transition-all duration-500 overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
                     <div class="p-10">
                         <div class="flex justify-between items-start mb-6">
                             <h3 class="text-3xl text-white font-serif italic group-hover:text-amber-500 transition-colors">{project.title}</h3>
-                            <span class="px-3 py-1 text-[10px] uppercase tracking-widest border border-white/20 rounded-full text-slate-400">Live</span>
+                            {project.is_live && (
+                                <span class="px-3 py-1 text-[10px] uppercase tracking-widest border border-white/20 rounded-full text-slate-400">Live</span>
+                            )}
                         </div>
+                        <p class="text-sm text-amber-500 uppercase tracking-widest mb-4">{project.type}</p>
                         <p class="text-slate-400 font-light leading-relaxed mb-8">{project.desc}</p>
                         <span class="inline-flex items-center text-sm uppercase tracking-widest text-amber-500 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                            Слушать <span class="ml-2">&rarr;</span>
+                            Подробнее <span class="ml-2">&rarr;</span>
                         </span>
                     </div>
                 </a>
             ))}
         </div>
 
-        <div class="border-t border-white/5 pt-16 text-center">
-            <h3 class="text-sm uppercase tracking-[0.2em] text-slate-500 mb-8">Архив и другие проекты</h3>
-            <div class="flex flex-wrap justify-center gap-x-12 gap-y-4">
-                {pastProjects.map(project => (
-                    <span class="text-xl font-serif text-slate-400 hover:text-white transition-colors cursor-default">
-                        {project}
-                    </span>
-                ))}
+        {archiveList && archiveList.length > 0 && (
+            <div class="border-t border-white/5 pt-16 text-center">
+                <h3 class="text-sm uppercase tracking-[0.2em] text-slate-500 mb-8">{archiveHeading}</h3>
+                <div class="flex flex-wrap justify-center gap-x-12 gap-y-4">
+                    {archiveList.map((project, index) => (
+                        <>
+                            {project.link ? (
+                                <a href={project.link} target="_blank" class="text-xl font-serif text-slate-400 hover:text-white transition-colors">
+                                    {project.name}
+                                </a>
+                            ) : (
+                                <span class="text-xl font-serif text-slate-400 hover:text-slate-300 transition-colors cursor-default">
+                                    {project.name}
+                                </span>
+                            )}
+                            
+                            {/* Разделитель (точки), не ставим после последнего элемента */}
+                            {index !== archiveList.length - 1 && (
+                                <span class="text-slate-700 hidden sm:inline">•</span>
+                            )}
+                        </>
+                    ))}
+                </div>
             </div>
-        </div>
+        )}
 
     </div>
 </section>
