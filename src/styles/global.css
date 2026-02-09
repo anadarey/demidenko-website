@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Плавная прокрутка для всей страницы */
+  html {
+    scroll-behavior: smooth;
+    @apply antialiased; /* Сглаживание шрифтов (MacOS style) */
+  }
+
+  body {
+    @apply bg-slate-900 text-slate-100;
+  }
+  
+  /* Стилизация заголовков по умолчанию */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-light;
+  }
+}
+
+@layer utilities {
+  /* Утилита для скрытия скроллбара (если понадобится в блоках), но с возможностью скролла */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* --- ГЛОБАЛЬНАЯ КОСМЕТИКА --- */
+
+/* 1. Цвет выделения текста (Selection) */
+/* Вместо стандартного синего делаем золотой/янтарный */
+::selection {
+  background-color: #d97706; /* amber-600 */
+  color: #ffffff;
+}
+
+/* 2. Кастомный Скроллбар (Scrollbar) */
+/* Для Webkit браузеров (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a; /* slate-900 - цвет фона сайта */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155; /* slate-700 - цвет ползунка */
+  border-radius: 5px;
+  border: 2px solid #0f172a; /* отступ от края */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569; /* slate-600 при наведении */
+}
+
+/* Для Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 #0f172a;
+}
