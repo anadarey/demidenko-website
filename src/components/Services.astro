@@ -27,8 +27,13 @@ const { heading, sub, list } = Astro.props;
             <div class="md:col-span-2 space-y-12">
                 {list.map((service, index) => (
                     <div class="flex gap-6 group">
-                        <div class="text-amber-500/30 text-4xl font-serif group-hover:text-amber-500 transition-colors">
-                            {String(index + 1).padStart(2, '0')}
+                        <div class="shrink-0 mt-1"> <svg 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          viewBox="0 0 24 24" 
+                          fill="currentColor" 
+                          class="w-8 h-8 text-amber-500/40 group-hover:text-amber-500 group-hover:scale-110 transition-all duration-500 ease-out">
+                          <path d="M12 2L14.39 9.61L22 12L14.39 14.39L12 22L9.61 14.39L2 12L9.61 9.61L12 2Z" />
+                          </svg>
                         </div>
                         <div>
                             <h3 class="text-2xl text-white mb-3 font-serif">{service.title}</h3>

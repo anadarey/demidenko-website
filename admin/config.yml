@@ -1,0 +1,75 @@
+backend:
+  name: github
+  repo: anadarey/demidenko-website # <-- Убедитесь, что тут ваш ник/репо
+  branch: main
+  site_domain: www.demidenko.info
+  base_url: https://www.demidenko.info
+  auth_endpoint: api/auth
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  # 1. КОЛЛЕКЦИЯ ВИДЕО (SANGAM)
+  - name: "sangam"
+    label: "Sangam Videos"
+    folder: "src/content/sangam"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "YouTube ID", name: "id", widget: "string"}
+      - {label: "Заголовок", name: "title", widget: "string"}
+      - {label: "Описание", name: "desc", widget: "text"}
+      - {label: "Порядок", name: "order", widget: "number", default: 10, value_type: "int"}
+
+  # 2. КОЛЛЕКЦИЯ СТРАНИЦ (ГЛАВНАЯ)
+  - name: "pages"
+    label: "Страницы сайта"
+    files:
+      - name: "home"
+        label: "Главная страница (Home)"
+        file: "src/content/pages/home.md"
+        fields:
+
+          # --- ABOUT ---
+          - {label: "--- ОБО МНЕ ---", name: "about_sep", widget: "hidden"}
+          - {label: "Заголовок Обо мне", name: "about_title", widget: "string"}
+          - {label: "Текст Обо мне", name: "about_text", widget: "markdown"}
+          # Цитату убрали из home.md, но можно оставить как optional
+          - {label: "Цитата (необязательно)", name: "about_quote", widget: "string", required: false}
+          - {label: "Фото портрет", name: "about_image", widget: "image"}
+
+          # --- PROJECTS ---
+          - {label: "--- ПРОЕКТЫ ---", name: "projects_sep", widget: "hidden"}
+          - {label: "Заголовок секции", name: "projects_heading", widget: "string"}
+          - {label: "Подзаголовок", name: "projects_sub", widget: "string"}
+          - label: "Список проектов"
+            name: "projects_list"
+            widget: "list"
+            fields:
+              - {label: "Название", name: "title", widget: "string"}
+              - {label: "Тип", name: "type", widget: "string"}
+              - {label: "Описание", name: "desc", widget: "text"}
+              - {label: "Ссылка", name: "link", widget: "string"}
+              - {label: "Метка LIVE", name: "is_live", widget: "boolean", default: true}
+
+          # --- ARCHIVE ---
+          - {label: "--- АРХИВ ---", name: "archive_sep", widget: "hidden"}
+          - {label: "Заголовок архива", name: "archive_heading", widget: "string"}
+          - label: "Список архивных проектов"
+            name: "archive_list"
+            widget: "list"
+            fields:
+              - {label: "Название", name: "name", widget: "string"}
+              - {label: "Ссылка", name: "link", widget: "string", required: false}
+
+          # --- SERVICES ---
+          - {label: "--- УСЛУГИ ---", name: "services_sep", widget: "hidden"}
+          - {label: "Заголовок секции", name: "services_heading", widget: "string"}
+          - {label: "Подзаголовок", name: "services_sub", widget: "string"}
+          - label: "Список услуг"
+            name: "services_list"
+            widget: "list"
+            fields:
+              - {label: "Название услуги", name: "title", widget: "string"}
+              - {label: "Описание", name: "desc", widget: "text"}
