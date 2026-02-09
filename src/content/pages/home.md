@@ -7,7 +7,7 @@ about_text: >
 
 
   Я не просто совмещаю стили, а ищу точки соприкосновения, где выверенная точность европейской гармонии встречается с медитативной импровизацией и глубиной индийской классической музыки.
-about_image: /images/uploads/bg-hero2.jpg
+about_image: /images/uploads/portrait.jpg
 projects_heading: Активные Проекты
 projects_sub: Слияние жанров и стилей
 projects_list:
